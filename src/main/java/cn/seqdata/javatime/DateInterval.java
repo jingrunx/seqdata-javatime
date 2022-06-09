@@ -1,6 +1,7 @@
 package cn.seqdata.javatime;
 
 import java.time.*;
+import java.time.temporal.TemporalUnit;
 
 public class DateInterval extends ReadableInterval<LocalDate> {
 
@@ -14,6 +15,14 @@ public class DateInterval extends ReadableInterval<LocalDate> {
 
 	public DateInterval(Period amount, LocalDate end) {
 		this(end.minus(amount), end);
+	}
+
+	public DateInterval(LocalDate start, TemporalUnit unit) {
+		this(start, start.plus(1, unit));
+	}
+
+	public DateInterval(TemporalUnit unit, LocalDate end) {
+		this(end.minus(1, unit), end);
 	}
 
 	@Override

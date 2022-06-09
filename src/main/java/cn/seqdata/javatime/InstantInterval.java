@@ -2,6 +2,7 @@ package cn.seqdata.javatime;
 
 import java.time.*;
 import java.time.temporal.TemporalAmount;
+import java.time.temporal.TemporalUnit;
 
 public class InstantInterval extends ReadableInterval<Instant> {
 
@@ -15,6 +16,14 @@ public class InstantInterval extends ReadableInterval<Instant> {
 
 	public InstantInterval(TemporalAmount amount, Instant end) {
 		this(end.minus(amount), end);
+	}
+
+	public InstantInterval(Instant start, TemporalUnit unit) {
+		this(start, start.plus(1, unit));
+	}
+
+	public InstantInterval(TemporalUnit unit, Instant end) {
+		this(end.minus(1, unit), end);
 	}
 
 	@Override

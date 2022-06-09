@@ -2,6 +2,7 @@ package cn.seqdata.javatime;
 
 import java.time.*;
 import java.time.temporal.TemporalAmount;
+import java.time.temporal.TemporalUnit;
 
 public class DateTimeInterval extends ReadableInterval<LocalDateTime> {
 
@@ -15,6 +16,14 @@ public class DateTimeInterval extends ReadableInterval<LocalDateTime> {
 
 	public DateTimeInterval(TemporalAmount amount, LocalDateTime end) {
 		this(end.minus(amount), end);
+	}
+
+	public DateTimeInterval(LocalDateTime start, TemporalUnit unit) {
+		this(start, start.plus(1, unit));
+	}
+
+	public DateTimeInterval(TemporalUnit unit, LocalDateTime end) {
+		this(end.minus(1, unit), end);
 	}
 
 	public InstantInterval toInstantInterval() {
