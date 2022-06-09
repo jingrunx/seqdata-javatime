@@ -3,6 +3,8 @@ package cn.seqdata.javatime;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.*;
+import java.time.chrono.ChronoPeriod;
+import java.time.temporal.TemporalAmount;
 import java.util.Date;
 import java.util.Objects;
 import java.util.function.Function;
@@ -131,6 +133,25 @@ public final class JavaTimeUtils {
 	//LocalTime
 	public static Time toTime(LocalTime time) {
 		return map(time, Time::valueOf);
+	}
+
+	//加减乘除
+	public static TemporalAmount multipliedBy(TemporalAmount value, int scalar) {
+		if(value instanceof Duration) {
+			return ((Duration) value).multipliedBy(scalar);
+		} else if(value instanceof ChronoPeriod) {
+			return ((ChronoPeriod) value).multipliedBy(scalar);
+		} else {
+			throw new UnsupportedOperationException();
+		}
+	}
+
+	public static TemporalAmount dividedBy(TemporalAmount value, long divisor) {
+		if(value instanceof Duration) {
+			return ((Duration) value).dividedBy(divisor);
+		} else {
+			throw new UnsupportedOperationException();
+		}
 	}
 
 	private static <T, R> R map(T value, Function<T, R> mapper) {

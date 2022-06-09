@@ -16,14 +16,6 @@ public class DateInterval extends ReadableInterval<LocalDate> {
 		this(end.minus(amount), end);
 	}
 
-	public Period toPeriod() {
-		return Period.between(start, end);
-	}
-
-	public DateTimeInterval toDateTimeInterval() {
-		return new DateTimeInterval(start.atTime(LocalTime.MIDNIGHT), end.atTime(LocalTime.MIDNIGHT));
-	}
-
 	@Override
 	public DateInterval withStart(LocalDate start) {
 		return new DateInterval(start, end);
@@ -32,6 +24,14 @@ public class DateInterval extends ReadableInterval<LocalDate> {
 	@Override
 	public DateInterval withEnd(LocalDate end) {
 		return new DateInterval(start, end);
+	}
+
+	public Period toPeriod() {
+		return Period.between(start, end);
+	}
+
+	public DateTimeInterval toDateTimeInterval() {
+		return new DateTimeInterval(start.atTime(LocalTime.MIDNIGHT), end.atTime(LocalTime.MIDNIGHT));
 	}
 
 	public static DateInterval from(Year year) {

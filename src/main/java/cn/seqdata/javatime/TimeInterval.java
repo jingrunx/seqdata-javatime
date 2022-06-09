@@ -18,10 +18,6 @@ public class TimeInterval extends ReadableInterval<LocalTime> {
 		this(end.minus(amount), end);
 	}
 
-	public DateTimeInterval toDateTimeInterval(LocalDate date) {
-		return new DateTimeInterval(date.atTime(start), date.atTime(end));
-	}
-
 	@Override
 	public TimeInterval withStart(LocalTime start) {
 		return new TimeInterval(start, end);
@@ -30,5 +26,9 @@ public class TimeInterval extends ReadableInterval<LocalTime> {
 	@Override
 	public TimeInterval withEnd(LocalTime end) {
 		return new TimeInterval(start, end);
+	}
+
+	public DateTimeInterval toDateTimeInterval(LocalDate date) {
+		return new DateTimeInterval(date.atTime(start), date.atTime(end));
 	}
 }
