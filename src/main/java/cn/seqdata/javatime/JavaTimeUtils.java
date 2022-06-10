@@ -10,7 +10,34 @@ import java.util.Objects;
 import java.util.function.Function;
 
 public final class JavaTimeUtils {
+	private static final ZoneId ZONE_ID = ZoneId.systemDefault();
+
 	private JavaTimeUtils() {
+	}
+
+	//epochMilli
+	public static Instant toInstant(long epochMilli) {
+		return map(epochMilli, Instant::ofEpochMilli);
+	}
+
+	public static OffsetDateTime toOffsetDateTime(long epochMilli) {
+		return map(epochMilli, x -> OffsetDateTime.ofInstant(Instant.ofEpochMilli(epochMilli), ZONE_ID));
+	}
+
+	public static ZonedDateTime toZonedDateTime(long epochMilli) {
+		return map(epochMilli, x -> ZonedDateTime.ofInstant(Instant.ofEpochMilli(epochMilli), ZONE_ID));
+	}
+
+	public static LocalDateTime toLocalDateTime(long epochMilli) {
+		return map(epochMilli, x -> LocalDateTime.ofInstant(Instant.ofEpochMilli(epochMilli), ZONE_ID));
+	}
+
+	public static LocalDate toLocalDate(long epochMilli) {
+		return map(epochMilli, x -> toLocalDateTime(x).toLocalDate());
+	}
+
+	public static LocalTime toLocalTime(long epochMilli) {
+		return map(epochMilli, x -> toLocalDateTime(x).toLocalTime());
 	}
 
 	//Date
@@ -19,23 +46,23 @@ public final class JavaTimeUtils {
 	}
 
 	public static OffsetDateTime toOffsetDateTime(Date date) {
-		return map(date, x -> toZonedDateTime(x).toOffsetDateTime());
+		return map(date, x -> OffsetDateTime.ofInstant(x.toInstant(), ZONE_ID));
 	}
 
 	public static ZonedDateTime toZonedDateTime(Date date) {
-		return map(date, x -> toInstant(x).atZone(ZoneId.systemDefault()));
+		return map(date, x -> ZonedDateTime.ofInstant(x.toInstant(), ZONE_ID));
 	}
 
 	public static LocalDateTime toLocalDateTime(Date date) {
-		return map(date, x -> toZonedDateTime(x).toLocalDateTime());
+		return map(date, x -> LocalDateTime.ofInstant(x.toInstant(), ZONE_ID));
 	}
 
 	public static LocalDate toLocalDate(Date date) {
-		return map(date, x -> toZonedDateTime(x).toLocalDate());
+		return map(date, x -> toLocalDateTime(x).toLocalDate());
 	}
 
 	public static LocalTime toLocalTime(Date date) {
-		return map(date, x -> toZonedDateTime(x).toLocalTime());
+		return map(date, x -> toLocalDateTime(x).toLocalTime());
 	}
 
 	//Instant
@@ -44,23 +71,23 @@ public final class JavaTimeUtils {
 	}
 
 	public static OffsetDateTime toOffsetDateTime(Instant instant) {
-		return map(instant, x -> toZonedDateTime(x).toOffsetDateTime());
+		return map(instant, x -> OffsetDateTime.ofInstant(x, ZONE_ID));
 	}
 
 	public static ZonedDateTime toZonedDateTime(Instant instant) {
-		return map(instant, x -> x.atZone(ZoneId.systemDefault()));
+		return map(instant, x -> ZonedDateTime.ofInstant(x, ZONE_ID));
 	}
 
 	public static LocalDateTime toLocalDateTime(Instant instant) {
-		return map(instant, x -> toZonedDateTime(x).toLocalDateTime());
+		return map(instant, x -> LocalDateTime.ofInstant(x, ZONE_ID));
 	}
 
 	public static LocalDate toLocalDate(Instant instant) {
-		return map(instant, x -> toZonedDateTime(x).toLocalDate());
+		return map(instant, x -> toLocalDateTime(x).toLocalDate());
 	}
 
 	public static LocalTime toLocalTime(Instant instant) {
-		return map(instant, x -> toZonedDateTime(x).toLocalTime());
+		return map(instant, x -> toLocalDateTime(x).toLocalTime());
 	}
 
 	//OffsetDateTime
@@ -98,7 +125,7 @@ public final class JavaTimeUtils {
 	}
 
 	public static ZonedDateTime toZonedDateTime(LocalDateTime ldt) {
-		return map(ldt, x -> x.atZone(ZoneId.systemDefault()));
+		return map(ldt, x -> x.atZone(ZONE_ID));
 	}
 
 	public static LocalDate toLocalDate(LocalDateTime ldt) {
@@ -123,7 +150,7 @@ public final class JavaTimeUtils {
 	}
 
 	public static ZonedDateTime toZonedDateTime(LocalDate date) {
-		return map(date, x -> toLocalDateTime(x).atZone(ZoneId.systemDefault()));
+		return map(date, x -> ZonedDateTime.of(x, LocalTime.MIDNIGHT, ZONE_ID));
 	}
 
 	public static LocalDateTime toLocalDateTime(LocalDate date) {

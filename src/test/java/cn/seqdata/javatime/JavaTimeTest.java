@@ -2,7 +2,10 @@ package cn.seqdata.javatime;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.temporal.ChronoField;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 import org.junit.jupiter.api.Test;
@@ -35,6 +38,31 @@ public class JavaTimeTest {
 		System.out.println(JavaTimeUtils.toLocalDateTime(instant));
 		System.out.println(JavaTimeUtils.toLocalDate(instant));
 		System.out.println(JavaTimeUtils.toLocalTime(instant));
+	}
+
+	@Test
+	public void testGetFields() {
+		LocalDateTime ldt = LocalDateTime.now();
+
+		for(ChronoField field : ChronoField.values()) {
+			try {
+				System.out.println(field.name() + ": " + ldt.getLong(field));
+			} catch(RuntimeException ignored) {
+			}
+
+		}
+	}
+
+	@Test
+	public void testTruncated() {
+		LocalDateTime ldt = LocalDateTime.now();
+
+		for(ChronoUnit unit : ChronoUnit.values()) {
+			try {
+				System.out.println(unit.name() + ": " + ldt.truncatedTo(unit));
+			} catch(RuntimeException ignored) {
+			}
+		}
 	}
 
 	@Test
