@@ -1,9 +1,6 @@
 package cn.seqdata.javatime;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
 import java.time.temporal.ChronoField;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
@@ -49,7 +46,6 @@ public class JavaTimeTest {
 				System.out.println(field.name() + ": " + ldt.getLong(field));
 			} catch(RuntimeException ignored) {
 			}
-
 		}
 	}
 
@@ -112,6 +108,16 @@ public class JavaTimeTest {
 		for(DateUnit value : DateUnit.values()) {
 			System.out.println(value.toInterval(date));
 		}
+	}
+
+	@Test
+	public void testDuration() {
+		System.out.println(Duration.ZERO);
+		Instant instant = Instant.now();
+		Year year = Year.of(1999);
+		LocalDate date = LocalDate.of(2001, 2, 3);
+		LocalDateTime ldt = LocalDateTime.of(2000, 1, 2, 12, 34, 56);
+		System.out.println(year.adjustInto(ldt));
 	}
 
 	@Test
