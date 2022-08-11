@@ -82,6 +82,10 @@ public final class TemporalUtils {
 	}
 
 	private static long value(TemporalAmount amount) {
-		return amount.get(ChronoUnit.SECONDS);
+		if(amount instanceof Duration) {
+			return amount.get(ChronoUnit.SECONDS);
+		} else {
+			return amount.get(ChronoUnit.DAYS) * DateTimeConstants.SECONDS_PER_DAY;
+		}
 	}
 }
