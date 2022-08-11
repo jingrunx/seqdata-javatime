@@ -81,11 +81,13 @@ public final class TemporalUtils {
 		return (int) (interval / period);
 	}
 
-	private static long value(TemporalAmount amount) {
-		if(amount instanceof Duration) {
-			return amount.get(ChronoUnit.SECONDS);
+	private static long value(TemporalAmount value) {
+		if(value instanceof Duration) {
+			return value.get(ChronoUnit.SECONDS);
+		} else if(value instanceof ChronoPeriod) {
+			return value.get(ChronoUnit.DAYS) * DateTimeConstants.SECONDS_PER_DAY;
 		} else {
-			return amount.get(ChronoUnit.DAYS) * DateTimeConstants.SECONDS_PER_DAY;
+			throw new UnsupportedOperationException();
 		}
 	}
 }
