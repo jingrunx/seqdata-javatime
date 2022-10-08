@@ -29,7 +29,7 @@ public enum RelativeTime {
 	/**
 	 * 近15分钟
 	 */
-	pt15m(Duration.ofHours(15)),
+	pt15m(Duration.ofMinutes(15)),
 	/**
 	 * 近30分钟
 	 */

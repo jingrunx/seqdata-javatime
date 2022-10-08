@@ -64,6 +64,10 @@ public final class JavaTimeUtils {
 	}
 
 	//Instant
+	public static long toEpochMilli(Instant instant) {
+		return instant.toEpochMilli();
+	}
+
 	public static Timestamp toTimestamp(Instant instant) {
 		return map(instant, Timestamp::from);
 	}
@@ -89,6 +93,10 @@ public final class JavaTimeUtils {
 	}
 
 	//OffsetDateTime
+	public static long toEpochMilli(OffsetDateTime odt) {
+		return toEpochMilli(toInstant(odt));
+	}
+
 	public static Instant toInstant(OffsetDateTime odt) {
 		return map(odt, OffsetDateTime::toInstant);
 	}
@@ -112,6 +120,10 @@ public final class JavaTimeUtils {
 	//LocalDateTime
 	public static Timestamp toTimestamp(LocalDateTime ldt) {
 		return map(ldt, Timestamp::valueOf);
+	}
+
+	public static long toEpochMilli(LocalDateTime ldt) {
+		return toEpochMilli(toInstant(ldt));
 	}
 
 	public static Instant toInstant(LocalDateTime ldt) {
@@ -139,6 +151,10 @@ public final class JavaTimeUtils {
 		return map(date, java.sql.Date::valueOf);
 	}
 
+	public static long toEpochMilli(LocalDate date) {
+		return toEpochMilli(toInstant(date));
+	}
+
 	public static Instant toInstant(LocalDate date) {
 		return map(date, x -> toZonedDateTime(x).toInstant());
 	}
@@ -158,6 +174,10 @@ public final class JavaTimeUtils {
 	//LocalTime
 	public static Time toTime(LocalTime time) {
 		return map(time, Time::valueOf);
+	}
+
+	public static long toEpochMilli(LocalTime time) {
+		return time.toNanoOfDay() / 1_000_000L;
 	}
 
 	private static <T, R> R map(T value, Function<T, R> mapper) {
