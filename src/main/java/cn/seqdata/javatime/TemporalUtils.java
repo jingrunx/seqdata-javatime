@@ -66,7 +66,7 @@ public final class TemporalUtils {
 	}
 
 	public static int idx(LocalDate base, LocalDate curr, TemporalAmount period) {
-		return size(Duration.between(base, curr), period);
+		return idx(JavaTimeUtils.toLocalDateTime(base), JavaTimeUtils.toLocalDateTime(curr), period);
 	}
 
 	public static int idx(LocalTime time, TemporalUnit unit) {
