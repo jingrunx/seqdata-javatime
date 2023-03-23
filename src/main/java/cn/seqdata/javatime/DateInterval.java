@@ -26,6 +26,11 @@ public class DateInterval extends ReadableInterval<LocalDate> {
 	}
 
 	@Override
+	public Duration toDuration() {
+		return toDateTimeInterval().toDuration();
+	}
+
+	@Override
 	public DateInterval withStart(LocalDate start) {
 		return new DateInterval(start, end);
 	}

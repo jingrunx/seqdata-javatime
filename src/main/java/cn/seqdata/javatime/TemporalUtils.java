@@ -46,35 +46,35 @@ public final class TemporalUtils {
 	}
 
 	public static int idx(Instant base, Instant curr, TemporalUnit unit) {
-		return size(Duration.between(base, curr), unit.getDuration());
+		return size(new InstantInterval(base, curr), unit.getDuration());
 	}
 
 	public static int idx(Instant base, Instant curr, TemporalAmount period) {
-		return size(Duration.between(base, curr), period);
+		return size(new InstantInterval(base, curr), period);
 	}
 
 	public static int idx(LocalDateTime base, LocalDateTime curr, TemporalUnit unit) {
-		return size(Duration.between(base, curr), unit.getDuration());
+		return size(new DateTimeInterval(base, curr), unit.getDuration());
 	}
 
 	public static int idx(LocalDateTime base, LocalDateTime curr, TemporalAmount period) {
-		return size(Duration.between(base, curr), period);
+		return size(new DateTimeInterval(base, curr), period);
 	}
 
 	public static int idx(LocalDate base, LocalDate curr, TemporalUnit unit) {
-		return size(Duration.between(base, curr), unit.getDuration());
+		return size(new DateInterval(base, curr), unit.getDuration());
 	}
 
 	public static int idx(LocalDate base, LocalDate curr, TemporalAmount period) {
-		return idx(JavaTimeUtils.toLocalDateTime(base), JavaTimeUtils.toLocalDateTime(curr), period);
+		return size(new DateInterval(base, curr), period);
 	}
 
 	public static int idx(LocalTime time, TemporalUnit unit) {
-		return size(Duration.between(LocalTime.MIDNIGHT, time), unit.getDuration());
+		return size(new TimeInterval(LocalTime.MIDNIGHT, time), unit.getDuration());
 	}
 
 	public static int idx(LocalTime time, TemporalAmount period) {
-		return size(Duration.between(LocalTime.MIDNIGHT, time), period);
+		return size(new TimeInterval(LocalTime.MIDNIGHT, time), period);
 	}
 
 	private static int size(long interval, long period) {
