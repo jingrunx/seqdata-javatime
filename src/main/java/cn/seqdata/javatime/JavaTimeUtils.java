@@ -63,6 +63,18 @@ public final class JavaTimeUtils {
 		return map(date, x -> toLocalDateTime(x).toLocalTime());
 	}
 
+	public static LocalDateTime toLocalDateTime(java.sql.Timestamp timestamp) {
+		return map(timestamp, java.sql.Timestamp::toLocalDateTime);
+	}
+
+	public static LocalDate toLocalDate(java.sql.Date date) {
+		return map(date, java.sql.Date::toLocalDate);
+	}
+
+	public static LocalTime toLocalTime(java.sql.Time time) {
+		return map(time, java.sql.Time::toLocalTime);
+	}
+
 	//Instant
 	public static long toEpochMilli(Instant instant) {
 		return instant.toEpochMilli();

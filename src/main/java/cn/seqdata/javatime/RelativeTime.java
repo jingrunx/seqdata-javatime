@@ -4,9 +4,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
-import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAmount;
-import java.time.temporal.TemporalUnit;
 
 public enum RelativeTime {
 	/**
@@ -21,7 +19,7 @@ public enum RelativeTime {
 	/**
 	 * 近1分钟
 	 */
-	pt1m(ChronoUnit.MINUTES),
+	pt1m(Duration.ofMinutes(1)),
 	/**
 	 * 近5分钟
 	 */
@@ -37,11 +35,23 @@ public enum RelativeTime {
 	/**
 	 * 近1小时
 	 */
-	pt1h(ChronoUnit.HOURS),
+	pt1h(Duration.ofHours(1)),
+	/**
+	 * 近2小时
+	 */
+	pt2h(Duration.ofHours(2)),
+	/**
+	 * 近3小时
+	 */
+	pt3h(Duration.ofHours(3)),
 	/**
 	 * 近4小时
 	 */
 	pt4h(Duration.ofHours(4)),
+	/**
+	 * 近6小时
+	 */
+	pt6h(Duration.ofHours(6)),
 	/**
 	 * 近8小时
 	 */
@@ -49,11 +59,11 @@ public enum RelativeTime {
 	/**
 	 * 近12小时
 	 */
-	pt12h(ChronoUnit.HALF_DAYS),
+	pt12h(Duration.ofHours(12)),
 	/**
 	 * 近1天
 	 */
-	p1d(ChronoUnit.DAYS),
+	p1d(Period.ofDays(1)),
 	/**
 	 * 近3天
 	 */
@@ -61,7 +71,7 @@ public enum RelativeTime {
 	/**
 	 * 近1周
 	 */
-	p1w(ChronoUnit.WEEKS),
+	p1w(Period.ofWeeks(1)),
 	/**
 	 * 近2周
 	 */
@@ -69,7 +79,11 @@ public enum RelativeTime {
 	/**
 	 * 近1个月
 	 */
-	p1m(ChronoUnit.MONTHS),
+	p1m(Period.ofMonths(1)),
+	/**
+	 * 近2个月
+	 */
+	p2m(Period.ofMonths(2)),
 	/**
 	 * 近3个月
 	 */
@@ -81,7 +95,7 @@ public enum RelativeTime {
 	/**
 	 * 近1年
 	 */
-	p1y(ChronoUnit.YEARS),
+	p1y(Period.ofYears(1)),
 	/**
 	 * 近2年
 	 */
@@ -99,10 +113,6 @@ public enum RelativeTime {
 
 	RelativeTime(TemporalAmount period) {
 		this.period = period;
-	}
-
-	RelativeTime(TemporalUnit unit) {
-		this.period = unit.getDuration();
 	}
 
 	public DateTimeInterval toInterval() {

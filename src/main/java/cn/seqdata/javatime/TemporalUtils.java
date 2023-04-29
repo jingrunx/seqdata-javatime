@@ -30,11 +30,11 @@ public final class TemporalUtils {
 	}
 
 	public static int size(TemporalAmount interval, TemporalUnit unit) {
-		return size(value(interval), value(unit.getDuration()));
+		return size(seconds(interval), seconds(unit.getDuration()));
 	}
 
 	public static int size(TemporalAmount interval, TemporalAmount period) {
-		return size(value(interval), value(period));
+		return size(seconds(interval), seconds(period));
 	}
 
 	public static int size(ReadableInterval<?> interval, TemporalUnit unit) {
@@ -77,11 +77,7 @@ public final class TemporalUtils {
 		return size(new TimeInterval(LocalTime.MIDNIGHT, time), period);
 	}
 
-	private static int size(long interval, long period) {
-		return (int) (interval / period);
-	}
-
-	private static long value(TemporalAmount value) {
+	public static long seconds(TemporalAmount value) {
 		if(value instanceof Duration) {
 			return value.get(ChronoUnit.SECONDS);
 		} else if(value instanceof ChronoPeriod) {
@@ -89,5 +85,9 @@ public final class TemporalUtils {
 		} else {
 			throw new UnsupportedOperationException();
 		}
+	}
+
+	private static int size(long interval, long period) {
+		return (int) (interval / period);
 	}
 }
