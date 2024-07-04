@@ -6,8 +6,10 @@ public interface JavaTimeFormatter {
 	String DATE_PATTERN = "yyyy-MM-dd";
 	String TIME_PATTERN = "HH:mm:ss";
 	String DATE_TIME_PATTERN = DATE_PATTERN + ' ' + TIME_PATTERN;
+	String HOUR_MINUTE_PATTERN = "HH:mm";
 
 	DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern(DATE_PATTERN);
 	DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern(TIME_PATTERN);
 	DateTimeFormatter DATETIME_FORMATTER = DateTimeFormatter.ofPattern(DATE_TIME_PATTERN);
+	DateTimeFormatter HOUR_MINUTE_FORMATTER = DateTimeFormatter.ofPattern(HOUR_MINUTE_PATTERN);
 }
