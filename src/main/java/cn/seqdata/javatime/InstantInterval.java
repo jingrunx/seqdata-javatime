@@ -51,4 +51,9 @@ public class InstantInterval extends ReadableInterval<Instant> {
 	public static InstantInterval from(Year year) {
 		return new InstantInterval(JavaTimeUtils.toInstant(year.atDay(1)), Period.ofYears(1));
 	}
+
+	public static InstantInterval parse(String text) {
+		String[] split = text.split(SEPARATOR);
+		return new InstantInterval(Instant.parse(split[0]), Instant.parse(split[1]));
+	}
 }
