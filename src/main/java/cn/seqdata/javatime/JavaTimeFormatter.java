@@ -6,14 +6,16 @@ import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.Map;
 
-public class JavaTimeFormatter {
+public abstract class JavaTimeFormatter {
 	public static final String DATE_PATTERN = "yyyy-MM-dd";
 	public static final String TIME_PATTERN = "HH:mm:ss";
+	public static final String HOUR_MINUTE_PATTERN = "HH:mm";
 	public static final String DATE_TIME_PATTERN = DATE_PATTERN + ' ' + TIME_PATTERN;
 
 	public static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern(DATE_PATTERN);
 	public static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern(TIME_PATTERN);
 	public static final DateTimeFormatter DATETIME_FORMATTER = DateTimeFormatter.ofPattern(DATE_TIME_PATTERN);
+	public static final DateTimeFormatter HOUR_MINUTE_FORMATTER = DateTimeFormatter.ofPattern(HOUR_MINUTE_PATTERN);
 
 	private static final String[] ENG_UNITS = {" years ", " months ", " days ", " hours ", " minutes ", " seconds "};
 	private static final String[] CHS_UNITS = {"年", "月", "天", "小时", "分钟", "秒"};
