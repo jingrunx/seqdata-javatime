@@ -1,24 +1,29 @@
 package cn.seqdata.javatime;
 
-import java.time.DayOfWeek;
-import java.time.LocalDate;
+import java.time.*;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAmount;
 import java.time.temporal.TemporalUnit;
-import java.util.Optional;
+import java.util.Objects;
 
 public final class DateUtils {
 	private DateUtils() {
 	}
 
-	public static LocalDate defaultOfNow(LocalDate date) {
-		return Optional.ofNullable(date)
-			.orElse(LocalDate.now());
+	public static LocalDate defaultIfNull(LocalDate date) {
+		return Objects.requireNonNullElse(date, LocalDate.now());
 	}
 
-	public static LocalDate defaultOfYesterday(LocalDate date) {
-		return Optional.ofNullable(date)
-			.orElse(minusDay(LocalDate.now()));
+	public static LocalTime defaultIfNull(LocalTime time) {
+		return Objects.requireNonNullElse(time, LocalTime.now());
+	}
+
+	public static LocalDateTime defaultIfNull(LocalDateTime occur) {
+		return Objects.requireNonNullElse(occur, LocalDateTime.now());
+	}
+
+	public static Instant defaultIfNull(Instant instant) {
+		return Objects.requireNonNullElse(instant, Instant.now());
 	}
 
 	public static LocalDate startOfWeek(LocalDate date) {

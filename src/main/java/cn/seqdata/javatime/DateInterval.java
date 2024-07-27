@@ -3,11 +3,17 @@ package cn.seqdata.javatime;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalUnit;
+import java.util.Objects;
 
 public class DateInterval extends ReadableInterval<LocalDate> {
+	public static final LocalDate MIN = LocalDate.of(1900, 1, 1);
+	public static final LocalDate MAX = LocalDate.of(9999, 12, 31);
 
 	public DateInterval(LocalDate start, LocalDate end) {
-		super(LocalDate::compareTo, start, end);
+		super(LocalDate::compareTo,
+			Objects.requireNonNullElse(start, MIN),
+			Objects.requireNonNullElse(end, MAX)
+		);
 	}
 
 	public DateInterval(LocalDate start, Period amount) {
@@ -58,12 +64,30 @@ public class DateInterval extends ReadableInterval<LocalDate> {
 	}
 
 	public static DateInterval parse(String text) {
-		String[] split = text.split(SEPARATOR);
-		return new DateInterval(LocalDate.parse(split[0]), LocalDate.parse(split[1]));
+		return parse(text, DateTimeFormatter.ISO_LOCAL_DATE);
 	}
 
 	public static DateInterval parse(String text, DateTimeFormatter formatter) {
-		String[] split = text.split(SEPARATOR);
-		return new DateInterval(LocalDate.parse(split[0], formatter), LocalDate.parse(split[1], formatter));
+		int index = text.indexOf(SEPARATOR);
+		if(index == -1) return new DateInterval(MIN, MAX);
+		LocalDate start = parseLocalDate(text.substring(0, index), formatter, MIN);
+		LocalDate end = parseLocalDate(text.substring(index + 1), formatter, MAX);
+		return new DateInterval(start, end);
+	}
+
+	public static LocalDate parseLocalDate(String text, LocalDate defaultValue) {
+		return parseLocalDate(text, DateTimeFormatter.ISO_LOCAL_DATE, defaultValue);
+	}
+
+	public static LocalDate parseLocalDate(String text, DateTimeFormatter formatter, LocalDate defaultValue) {
+		if(null == text || text.isEmpty()) {
+			return defaultValue;
+		} else if("MIN".equals(text)) {
+			return MIN;
+		} else if("MAX".equals(text)) {
+			return MAX;
+		} else {
+			return LocalDate.parse(text, formatter);
+		}
 	}
 }

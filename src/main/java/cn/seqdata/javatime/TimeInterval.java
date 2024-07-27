@@ -5,6 +5,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAmount;
 import java.time.temporal.TemporalUnit;
+import java.util.Objects;
 
 public class TimeInterval extends ReadableInterval<LocalTime> {
 	public static final TimeInterval ALL_DAY = new TimeInterval(LocalTime.MIN, LocalTime.MAX);
@@ -12,7 +13,10 @@ public class TimeInterval extends ReadableInterval<LocalTime> {
 	public static final TimeInterval PM = new TimeInterval(LocalTime.NOON, LocalTime.MAX);
 
 	public TimeInterval(LocalTime start, LocalTime end) {
-		super(LocalTime::compareTo, start, end);
+		super(LocalTime::compareTo,
+			Objects.requireNonNullElse(start, LocalTime.MIN),
+			Objects.requireNonNullElse(end, LocalTime.MAX)
+		);
 	}
 
 	public TimeInterval(LocalTime start, TemporalAmount amount) {
@@ -54,12 +58,36 @@ public class TimeInterval extends ReadableInterval<LocalTime> {
 	}
 
 	public static TimeInterval parse(String text) {
-		String[] split = text.split(SEPARATOR);
-		return new TimeInterval(LocalTime.parse(split[0]), LocalTime.parse(split[1]));
+		return parse(text, DateTimeFormatter.ISO_LOCAL_TIME);
 	}
 
 	public static TimeInterval parse(String text, DateTimeFormatter formatter) {
-		String[] split = text.split(SEPARATOR);
-		return new TimeInterval(LocalTime.parse(split[0], formatter), LocalTime.parse(split[1], formatter));
+		int index = text.indexOf(SEPARATOR);
+		if(index == -1) return ALL_DAY;
+		LocalTime start = parseLocalTime(text.substring(0, index), formatter, LocalTime.MIN);
+		LocalTime end = parseLocalTime(text.substring(index + 1), formatter, LocalTime.MAX);
+		return new TimeInterval(start, end);
+	}
+
+	public static LocalTime parseLocalTime(String text, LocalTime defaultValue) {
+		return parseLocalTime(text, DateTimeFormatter.ISO_LOCAL_TIME, defaultValue);
+	}
+
+	public static LocalTime parseLocalTime(String text, DateTimeFormatter formatter, LocalTime defaultValue) {
+		if(null == text || text.isEmpty()) {
+			return defaultValue;
+		} else if("MIN".equals(text)) {
+			return LocalTime.MIN;
+		} else if("MAX".equals(text)) {
+			return LocalTime.MAX;
+		} else if("MIDNIGHT".equals(text)) {
+			return LocalTime.MIDNIGHT;
+		} else if("NOON".equals(text)) {
+			return LocalTime.NOON;
+		} else if(text.startsWith("24:00")) {
+			return LocalTime.MAX;
+		} else {
+			return LocalTime.parse(text, formatter);
+		}
 	}
 }

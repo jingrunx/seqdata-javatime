@@ -76,10 +76,6 @@ public class ReadableInterval<T extends Temporal> {
 		return Objects.equals(start, interval.end) || Objects.equals(end, interval.start);
 	}
 
-	public boolean isEqual(ReadableInterval<T> other) {
-		return Objects.equals(start, other.start) && Objects.equals(end, other.end);
-	}
-
 	public boolean isBefore(T temporal) {
 		return comparator.compare(end, temporal) <= 0;
 	}
@@ -94,6 +90,19 @@ public class ReadableInterval<T extends Temporal> {
 
 	public boolean isAfter(ReadableInterval<T> interval) {
 		return comparator.compare(start, interval.end) >= 0;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if(this == o) return true;
+		if(!(o instanceof ReadableInterval)) return false;
+		ReadableInterval<?> that = (ReadableInterval<?>) o;
+		return Objects.equals(start, that.start) && Objects.equals(end, that.end);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(start, end);
 	}
 
 	@Override

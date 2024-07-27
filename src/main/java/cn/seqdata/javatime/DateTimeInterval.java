@@ -4,11 +4,17 @@ import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAmount;
 import java.time.temporal.TemporalUnit;
+import java.util.Objects;
 
 public class DateTimeInterval extends ReadableInterval<LocalDateTime> {
+	public static final LocalDateTime MIN = DateInterval.MIN.atTime(LocalTime.MIN);
+	public static final LocalDateTime MAX = DateInterval.MAX.atTime(LocalTime.MAX);
 
 	public DateTimeInterval(LocalDateTime start, LocalDateTime end) {
-		super(LocalDateTime::compareTo, start, end);
+		super(LocalDateTime::compareTo,
+			Objects.requireNonNullElse(start, MIN),
+			Objects.requireNonNullElse(end, MAX)
+		);
 	}
 
 	public DateTimeInterval(LocalDateTime start, TemporalAmount amount) {
@@ -62,12 +68,30 @@ public class DateTimeInterval extends ReadableInterval<LocalDateTime> {
 	}
 
 	public static DateTimeInterval parse(String text) {
-		String[] split = text.split(SEPARATOR);
-		return new DateTimeInterval(LocalDateTime.parse(split[0]), LocalDateTime.parse(split[1]));
+		return parse(text, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
 	}
 
 	public static DateTimeInterval parse(String text, DateTimeFormatter formatter) {
-		String[] split = text.split(SEPARATOR);
-		return new DateTimeInterval(LocalDateTime.parse(split[0], formatter), LocalDateTime.parse(split[1], formatter));
+		int index = text.indexOf(SEPARATOR);
+		if(index == -1) return new DateTimeInterval(MIN, MAX);
+		LocalDateTime start = parseDateTime(text.substring(0, index), formatter, MIN);
+		LocalDateTime end = parseDateTime(text.substring(index + 1), formatter, MAX);
+		return new DateTimeInterval(start, end);
+	}
+
+	public static LocalDateTime parseDateTime(String text, LocalDateTime defaultValue) {
+		return parseDateTime(text, DateTimeFormatter.ISO_LOCAL_DATE_TIME, defaultValue);
+	}
+
+	public static LocalDateTime parseDateTime(String text, DateTimeFormatter formatter, LocalDateTime defaultValue) {
+		if(null == text || text.isEmpty()) {
+			return defaultValue;
+		} else if("MIN".equals(text)) {
+			return MIN;
+		} else if("MAX".equals(text)) {
+			return MAX;
+		} else {
+			return LocalDateTime.parse(text, formatter);
+		}
 	}
 }

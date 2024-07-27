@@ -25,13 +25,25 @@ public class JacksonTest {
 		System.out.println(DateTimeInterval.from(Year.of(2024)));
 		System.out.println(DateInterval.from(Year.of(2024)));
 		System.out.println(TimeInterval.AM);
+		System.out.println(TimeInterval.PM);
+		System.out.println(TimeInterval.ALL_DAY);
 	}
 
 	@Test
 	public void testParse() {
 		System.out.println(InstantInterval.parse("2024-07-04T06:00:00Z~2024-07-05T06:00:00Z"));
+
 		System.out.println(DateTimeInterval.parse("2024-07-04T06:00~2024-07-05T06:00"));
+		System.out.println(DateTimeInterval.parse("2024-07-04T06:00~"));
+		System.out.println(DateTimeInterval.parse("~2024-07-05T06:00"));
+		System.out.println(DateTimeInterval.parse("MIN~MAX"));
 		System.out.println(DateInterval.parse("2024-07-04~2024-07-05"));
+		System.out.println(DateInterval.parse("~2024-07-04"));
+		System.out.println(DateInterval.parse("2024-07-04~"));
+		System.out.println(DateInterval.parse("~"));
 		System.out.println(TimeInterval.parse("06:00~07:00"));
+		System.out.println(TimeInterval.parse("06:00~24:00"));
+		System.out.println(TimeInterval.parse("NOON~MAX"));
+		System.out.println(TimeInterval.parse("~"));
 	}
 }
