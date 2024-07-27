@@ -3,6 +3,7 @@ package cn.seqdata.javatime;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.temporal.ChronoUnit;
+import java.util.Optional;
 
 public enum DateUnit {
 	DAYS("Days", ChronoUnit.DAYS) {
@@ -43,13 +44,13 @@ public enum DateUnit {
 
 	public abstract DateInterval toInterval(LocalDate date);
 
-	public static DateUnit valueOf(ChronoUnit unit) {
+	public static Optional<DateUnit> valueOf(ChronoUnit unit) {
 		for(DateUnit value : values()) {
 			if(unit == value.unit) {
-				return value;
+				return Optional.of(value);
 			}
 		}
 
-		return null;
+		return Optional.empty();
 	}
 }

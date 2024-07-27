@@ -1,6 +1,7 @@
 package cn.seqdata.javatime;
 
 import java.time.*;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAmount;
 import java.time.temporal.TemporalUnit;
 
@@ -58,5 +59,15 @@ public class DateTimeInterval extends ReadableInterval<LocalDateTime> {
 
 	public static DateTimeInterval from(Year year) {
 		return new DateTimeInterval(JavaTimeUtils.toLocalDateTime(year.atDay(1)), Period.ofYears(1));
+	}
+
+	public static DateTimeInterval parse(String text) {
+		String[] split = text.split(SEPARATOR);
+		return new DateTimeInterval(LocalDateTime.parse(split[0]), LocalDateTime.parse(split[1]));
+	}
+
+	public static DateTimeInterval parse(String text, DateTimeFormatter formatter) {
+		String[] split = text.split(SEPARATOR);
+		return new DateTimeInterval(LocalDateTime.parse(split[0], formatter), LocalDateTime.parse(split[1], formatter));
 	}
 }

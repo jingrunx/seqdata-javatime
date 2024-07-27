@@ -75,6 +75,8 @@ public final class DateTimeConstants {
 	public static final int DAYS_PER_YEAR = 366;
 	public static final int MONTHS_PER_YEAR = 12;
 
+	public static final int DAYS_1900_1970 = 25569;
+
 	private DateTimeConstants() {
 	}
 }

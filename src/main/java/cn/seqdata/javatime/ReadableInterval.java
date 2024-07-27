@@ -1,11 +1,13 @@
 package cn.seqdata.javatime;
 
 import java.time.Duration;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.Temporal;
 import java.util.Comparator;
 import java.util.Objects;
 
 public class ReadableInterval<T extends Temporal> {
+	public static final String SEPARATOR = "~";
 	protected final Comparator<T> comparator;
 	protected final T start;
 	protected final T end;
@@ -96,6 +98,10 @@ public class ReadableInterval<T extends Temporal> {
 
 	@Override
 	public String toString() {
-		return String.format("%s/%s", start, end);
+		return start + SEPARATOR + end;
+	}
+
+	public String toString(DateTimeFormatter formatter) {
+		return formatter.format(start) + SEPARATOR + formatter.format(end);
 	}
 }

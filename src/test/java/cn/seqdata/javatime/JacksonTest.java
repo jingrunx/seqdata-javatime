@@ -1,0 +1,37 @@
+package cn.seqdata.javatime;
+
+import java.time.Instant;
+import java.time.Year;
+import java.time.temporal.ChronoUnit;
+
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import cn.seqdata.javatime.jackson.IntervalModule;
+
+public class JacksonTest {
+	private static ObjectMapper mapper;
+
+	@BeforeAll
+	public static void init() {
+		mapper = new ObjectMapper();
+		mapper.registerModule(new IntervalModule());
+	}
+
+	@Test
+	public void testToString() {
+		System.out.println(new InstantInterval(Instant.now(), ChronoUnit.DAYS));
+		System.out.println(DateTimeInterval.from(Year.of(2024)));
+		System.out.println(DateInterval.from(Year.of(2024)));
+		System.out.println(TimeInterval.AM);
+	}
+
+	@Test
+	public void testParse() {
+		System.out.println(InstantInterval.parse("2024-07-04T06:00:00Z~2024-07-05T06:00:00Z"));
+		System.out.println(DateTimeInterval.parse("2024-07-04T06:00~2024-07-05T06:00"));
+		System.out.println(DateInterval.parse("2024-07-04~2024-07-05"));
+		System.out.println(TimeInterval.parse("06:00~07:00"));
+	}
+}

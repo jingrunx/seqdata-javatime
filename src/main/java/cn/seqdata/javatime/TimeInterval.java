@@ -2,10 +2,14 @@ package cn.seqdata.javatime;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAmount;
 import java.time.temporal.TemporalUnit;
 
 public class TimeInterval extends ReadableInterval<LocalTime> {
+	public static final TimeInterval ALL_DAY = new TimeInterval(LocalTime.MIN, LocalTime.MAX);
+	public static final TimeInterval AM = new TimeInterval(LocalTime.MIDNIGHT, LocalTime.NOON);
+	public static final TimeInterval PM = new TimeInterval(LocalTime.NOON, LocalTime.MAX);
 
 	public TimeInterval(LocalTime start, LocalTime end) {
 		super(LocalTime::compareTo, start, end);
@@ -39,5 +43,23 @@ public class TimeInterval extends ReadableInterval<LocalTime> {
 
 	public DateTimeInterval toDateTimeInterval(LocalDate date) {
 		return new DateTimeInterval(date.atTime(start), date.atTime(end));
+	}
+
+	public static TimeInterval start(LocalTime time) {
+		return new TimeInterval(time, LocalTime.MAX);
+	}
+
+	public static TimeInterval end(LocalTime time) {
+		return new TimeInterval(LocalTime.MIN, time);
+	}
+
+	public static TimeInterval parse(String text) {
+		String[] split = text.split(SEPARATOR);
+		return new TimeInterval(LocalTime.parse(split[0]), LocalTime.parse(split[1]));
+	}
+
+	public static TimeInterval parse(String text, DateTimeFormatter formatter) {
+		String[] split = text.split(SEPARATOR);
+		return new TimeInterval(LocalTime.parse(split[0], formatter), LocalTime.parse(split[1], formatter));
 	}
 }
