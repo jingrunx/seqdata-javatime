@@ -11,8 +11,8 @@ public class DateInterval extends ReadableInterval<LocalDate> {
 
 	public DateInterval(LocalDate start, LocalDate end) {
 		super(LocalDate::compareTo,
-			Objects.requireNonNullElse(start, MIN),
-			Objects.requireNonNullElse(end, MAX)
+			Objects.requireNonNullElse(start, LocalDate.now()),
+			Objects.requireNonNullElse(end, LocalDate.now())
 		);
 	}
 

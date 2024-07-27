@@ -14,8 +14,8 @@ public class TimeInterval extends ReadableInterval<LocalTime> {
 
 	public TimeInterval(LocalTime start, LocalTime end) {
 		super(LocalTime::compareTo,
-			Objects.requireNonNullElse(start, LocalTime.MIN),
-			Objects.requireNonNullElse(end, LocalTime.MAX)
+			Objects.requireNonNullElse(start, LocalTime.now()),
+			Objects.requireNonNullElse(end, LocalTime.now())
 		);
 	}
 
