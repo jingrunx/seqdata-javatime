@@ -1,12 +1,15 @@
 package cn.seqdata.javatime;
 
+import java.time.Duration;
 import java.time.Instant;
 import java.time.Year;
 import java.time.temporal.ChronoUnit;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import cn.seqdata.javatime.jackson.IntervalModule;
 
@@ -16,6 +19,7 @@ public class JacksonTest {
 	@BeforeAll
 	public static void init() {
 		mapper = new ObjectMapper();
+		mapper.registerModule(new JavaTimeModule());
 		mapper.registerModule(new IntervalModule());
 	}
 
@@ -45,5 +49,11 @@ public class JacksonTest {
 		System.out.println(TimeInterval.parse("06:00~24:00"));
 		System.out.println(TimeInterval.parse("NOON~MAX"));
 		System.out.println(TimeInterval.parse("~"));
+	}
+
+	@Test
+	public void testJson() throws JsonProcessingException {
+//		Duration duration = mapper.readValue("PT12H", Duration.class);
+		System.out.println(mapper.writeValueAsString(Duration.ofHours(12)));
 	}
 }

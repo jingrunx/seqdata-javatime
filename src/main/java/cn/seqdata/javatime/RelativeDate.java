@@ -8,51 +8,51 @@ public enum RelativeDate {
 	/**
 	 * 今天
 	 */
-	today(ChronoUnit.DAYS, UnaryOperator.identity()),
+	TODAY(ChronoUnit.DAYS, UnaryOperator.identity()),
 	/**
 	 * 昨天
 	 */
-	yesterday(ChronoUnit.DAYS, DateUtils::minusDay),
+	YESTERDAY(ChronoUnit.DAYS, DateUtils::minusDay),
 	/**
 	 * 明天
 	 */
-	tomorrow(ChronoUnit.DAYS, DateUtils::plusDay),
+	TOMORROW(ChronoUnit.DAYS, DateUtils::plusDay),
 	/**
 	 * 本周
 	 */
-	theWeek(ChronoUnit.WEEKS, DateUtils::startOfWeek),
+	THE_WEEK(ChronoUnit.WEEKS, DateUtils::startOfWeek),
 	/**
 	 * 上周
 	 */
-	lastWeek(ChronoUnit.WEEKS, date -> DateUtils.minusWeek(DateUtils.startOfWeek(date))),
+	LAST_WEEK(ChronoUnit.WEEKS, date -> DateUtils.minusWeek(DateUtils.startOfWeek(date))),
 	/**
 	 * 下周
 	 */
-	nextWeek(ChronoUnit.WEEKS, date -> DateUtils.plusWeek(DateUtils.startOfWeek(date))),
+	NEXT_WEEK(ChronoUnit.WEEKS, date -> DateUtils.plusWeek(DateUtils.startOfWeek(date))),
 	/**
 	 * 本月
 	 */
-	theMonth(ChronoUnit.MONTHS, DateUtils::startOfMonth),
+	THE_MONTH(ChronoUnit.MONTHS, DateUtils::startOfMonth),
 	/**
 	 * 上月
 	 */
-	lastMonth(ChronoUnit.MONTHS, date -> DateUtils.minusMonth(DateUtils.startOfMonth(date))),
+	LAST_MONTH(ChronoUnit.MONTHS, date -> DateUtils.minusMonth(DateUtils.startOfMonth(date))),
 	/**
 	 * 下月
 	 */
-	nextMonth(ChronoUnit.MONTHS, date -> DateUtils.plusMonth(DateUtils.startOfMonth(date))),
+	NEXT_MONTH(ChronoUnit.MONTHS, date -> DateUtils.plusMonth(DateUtils.startOfMonth(date))),
 	/**
 	 * 今年
 	 */
-	theYear(ChronoUnit.YEARS, DateUtils::startOfYear),
+	THE_YEAR(ChronoUnit.YEARS, DateUtils::startOfYear),
 	/**
 	 * 去年
 	 */
-	lastYear(ChronoUnit.YEARS, date -> DateUtils.minusYear(DateUtils.startOfYear(date))),
+	LAST_YEAR(ChronoUnit.YEARS, date -> DateUtils.minusYear(DateUtils.startOfYear(date))),
 	/**
 	 * 明年
 	 */
-	nextYear(ChronoUnit.YEARS, date -> DateUtils.plusYear(DateUtils.startOfYear(date)));
+	NEXT_YEAR(ChronoUnit.YEARS, date -> DateUtils.plusYear(DateUtils.startOfYear(date)));
 
 	public final ChronoUnit unit;
 	public final UnaryOperator<LocalDate> adjust;

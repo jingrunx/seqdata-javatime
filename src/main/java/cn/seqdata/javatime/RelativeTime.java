@@ -10,7 +10,7 @@ public enum RelativeTime {
 	/**
 	 * 最新
 	 */
-	pt0s(Duration.ZERO) {
+	PT0S(Duration.ZERO) {
 		@Override
 		public DateTimeInterval toInterval(LocalDateTime occur) {
 			return new DateTimeInterval(occur, occur);
@@ -19,95 +19,99 @@ public enum RelativeTime {
 	/**
 	 * 近1分钟
 	 */
-	pt1m(Duration.ofMinutes(1)),
+	PT1M(Duration.ofMinutes(1)),
 	/**
 	 * 近5分钟
 	 */
-	pt5m(Duration.ofMinutes(5)),
+	PT5M(Duration.ofMinutes(5)),
 	/**
 	 * 近15分钟
 	 */
-	pt15m(Duration.ofMinutes(15)),
+	PT15M(Duration.ofMinutes(15)),
 	/**
 	 * 近30分钟
 	 */
-	pt30m(Duration.ofMinutes(30)),
+	PT30M(Duration.ofMinutes(30)),
 	/**
 	 * 近1小时
 	 */
-	pt1h(Duration.ofHours(1)),
+	PT1H(Duration.ofHours(1)),
 	/**
 	 * 近2小时
 	 */
-	pt2h(Duration.ofHours(2)),
+	PT2H(Duration.ofHours(2)),
 	/**
 	 * 近3小时
 	 */
-	pt3h(Duration.ofHours(3)),
+	PT3H(Duration.ofHours(3)),
 	/**
 	 * 近4小时
 	 */
-	pt4h(Duration.ofHours(4)),
+	PT4H(Duration.ofHours(4)),
 	/**
 	 * 近6小时
 	 */
-	pt6h(Duration.ofHours(6)),
+	PT6H(Duration.ofHours(6)),
 	/**
 	 * 近8小时
 	 */
-	pt8h(Duration.ofHours(8)),
+	PT8H(Duration.ofHours(8)),
 	/**
 	 * 近12小时
 	 */
-	pt12h(Duration.ofHours(12)),
+	PT12H(Duration.ofHours(12)),
+	/**
+	 * 近24小时
+	 */
+	PT24H(Duration.ofHours(24)),
 	/**
 	 * 近1天
 	 */
-	p1d(Period.ofDays(1)),
+	P1D(Period.ofDays(1)),
 	/**
 	 * 近3天
 	 */
-	p3d(Period.ofDays(3)),
+	P3D(Period.ofDays(3)),
 	/**
 	 * 近1周
 	 */
-	p1w(Period.ofWeeks(1)),
+	P1W(Period.ofWeeks(1)),
 	/**
 	 * 近2周
 	 */
-	p2w(Period.ofWeeks(2)),
+	P2W(Period.ofWeeks(2)),
 	/**
 	 * 近1个月
 	 */
-	p1m(Period.ofMonths(1)),
+	P1M(Period.ofMonths(1)),
 	/**
 	 * 近2个月
 	 */
-	p2m(Period.ofMonths(2)),
+	P2M(Period.ofMonths(2)),
 	/**
 	 * 近3个月
 	 */
-	p3m(Period.ofMonths(3)),
+	P3M(Period.ofMonths(3)),
 	/**
 	 * 近6月
 	 */
-	p6m(Period.ofMonths(6)),
+	P6M(Period.ofMonths(6)),
 	/**
 	 * 近1年
 	 */
-	p1y(Period.ofYears(1)),
+	P1Y(Period.ofYears(1)),
 	/**
 	 * 近2年
 	 */
-	p2y(Period.ofYears(2)),
+	P2Y(Period.ofYears(2)),
 	/**
 	 * 近5年
 	 */
-	p5y(Period.ofYears(5)),
+	P5Y(Period.ofYears(5)),
 	/**
 	 * 近10年
 	 */
-	p10y(Period.ofYears(10));
+	P10Y(Period.ofYears(10));
 
 	public final TemporalAmount period;
 
