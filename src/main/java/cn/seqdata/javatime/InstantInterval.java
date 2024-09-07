@@ -3,6 +3,7 @@ package cn.seqdata.javatime;
 import java.time.*;
 import java.time.temporal.TemporalAmount;
 import java.time.temporal.TemporalUnit;
+import java.util.Objects;
 
 public class InstantInterval extends ReadableInterval<Instant> {
 
@@ -38,6 +39,16 @@ public class InstantInterval extends ReadableInterval<Instant> {
 
 	public DateTimeInterval toDateTimeInterval() {
 		return new DateTimeInterval(JavaTimeUtils.toLocalDateTime(start), JavaTimeUtils.toLocalDateTime(end));
+	}
+
+	public DateTimeInterval toDateTimeInterval(ZoneId zoneId) {
+		if(Objects.isNull(zoneId)) {
+			return toDateTimeInterval();
+		} else {
+			ZonedDateTime start = this.start.atZone(zoneId);
+			ZonedDateTime end = this.end.atZone(zoneId);
+			return new DateTimeInterval(start.toLocalDateTime(), end.toLocalDateTime());
+		}
 	}
 
 	public static InstantInterval from(LocalDate date) {

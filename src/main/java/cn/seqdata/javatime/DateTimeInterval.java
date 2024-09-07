@@ -33,10 +33,6 @@ public class DateTimeInterval extends ReadableInterval<LocalDateTime> {
 		this(end.minus(1, unit), end);
 	}
 
-	public InstantInterval toInstantInterval() {
-		return new InstantInterval(JavaTimeUtils.toInstant(start), JavaTimeUtils.toInstant(end));
-	}
-
 	@Override
 	public DateTimeInterval withStart(LocalDateTime start) {
 		return new DateTimeInterval(start, end);
@@ -45,6 +41,20 @@ public class DateTimeInterval extends ReadableInterval<LocalDateTime> {
 	@Override
 	public DateTimeInterval withEnd(LocalDateTime end) {
 		return new DateTimeInterval(start, end);
+	}
+
+	public InstantInterval toInstantInterval() {
+		return new InstantInterval(JavaTimeUtils.toInstant(start), JavaTimeUtils.toInstant(end));
+	}
+
+	public InstantInterval toInstantInterval(ZoneId zoneId) {
+		if(Objects.isNull(zoneId)) {
+			return toInstantInterval();
+		} else {
+			ZonedDateTime start = this.start.atZone(zoneId);
+			ZonedDateTime end = this.end.atZone(zoneId);
+			return new InstantInterval(start.toInstant(), end.toInstant());
+		}
 	}
 
 	public DateInterval toDateInterval() {
